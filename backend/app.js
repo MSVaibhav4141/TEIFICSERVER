@@ -7,12 +7,9 @@ const userRouter = require("./routes/userRoute");
 const orderRouter = require("./routes/orderRoute");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
-const path = require("path");
 const errorCatcher = require("./utils/errorCatcher");
 const cookieParser = require("cookie-parser");
-const cors = require('cors')
 
-app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
