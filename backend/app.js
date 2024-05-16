@@ -17,13 +17,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
-app.use(express.static(path.join(__dirname, '../../TEIFICCLIENT/build')));
-
-  app.get('*', (req, res) =>
-    res.sendFile(
-      path.resolve(__dirname, '../','../', 'TEIFICCLIENT', 'build', 'index.html')
-    )
-  );
 // Route Import
 app.use("/VC1", router);
 app.use("/VC1", userRouter);
