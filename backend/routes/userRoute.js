@@ -22,7 +22,7 @@ const router = express.Router();
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/password/passRecovery").post(forgotPass);
-router.route("/password/reset/:tkid").put(resetPassord);
+router.route("/password/reset/:tkid").put(resetPassord); 
 router.route("/logout").post(logout);
 
 router.route("/self").get(isAuth, getUserDetail);

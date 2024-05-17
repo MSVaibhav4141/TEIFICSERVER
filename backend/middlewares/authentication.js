@@ -8,11 +8,12 @@ const isAuth = asyncErrorCatcher(async (req, res, next) => {
   if (!token) {
     return next(new ErrorHandler("Please Login to access this resource", 401));
   }
-
+  
   const data = jwt.verify(token, process.env.JWT_SEC);
-
+  
   req.user = await User.findById(data.id);
   next();
 });
 
 module.exports = isAuth;
+ 

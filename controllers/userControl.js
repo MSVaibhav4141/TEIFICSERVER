@@ -18,7 +18,7 @@ exports.registerUser = asyncErrorCatcher(async (req, res, next) => {
     crop: "scale",
   });
   const { name, email, password, mobileNumber } = req.body;
-  const user = await User.create({
+  const user = await User.create({ 
     name,
     email,
     password,
@@ -28,7 +28,7 @@ exports.registerUser = asyncErrorCatcher(async (req, res, next) => {
       public_URI: myCloud.secure_url,
     },
   });
-  jwtMssg(user, 201, res);
+  jwtMssg(user, 201, res); 
 });
 
 // USER Login

@@ -11,16 +11,27 @@ const errorCatcher = require("./utils/errorCatcher");
 const cookieParser = require("cookie-parser");
 const cors = require('cors')
 
-app.use(cors());
-app.use(express.json());
+app.use(
+    cors({
+        credentials: true,
+      origin: "http://213.210.37.127:3000",
+    })
+);
 app.use(cookieParser());
+
+// Apply middleware to set Access-Control-Allow-Credentials header
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 // Route Import
 app.use("/VC1", router);
 app.use("/VC1", userRouter);
 app.use("/VC1", orderRouter);
-app.use("/VC1", paymentRoute);
+app.use("/VC1", paymentRoute); 
 app.use(errorCatcher);
 
 module.exports = app;
