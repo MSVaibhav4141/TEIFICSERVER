@@ -1,6 +1,8 @@
 const instance = require('../backend/razorpayIns');
 const crypto = require('crypto')
-
+const Product = require("../backend/models/productModel");
+const User = require("../backend/models/userModel");
+const Order = require("../backend/models/orderModel");
 const asyncErrorHandler = require("../backend/utils/asyncErrorHandler");
 
 exports.checkout = asyncErrorHandler(async (req, res, next) => {
@@ -35,6 +37,46 @@ exports.paymentVerification = asyncErrorHandler(async (req, res, next) => {
     //   razorpay_payment_id,
     //   razorpay_signature,
     // });
+    const addressString = req.query.address;
+    const address = JSON.parse(addressString);
+    const {
+      shippingInfo,
+      orderItems,
+      paymentIn,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+      paymentMethod,
+    } = address;
+
+    console.log(addressString)
+    console.log(address)
+    orderItems.forEach(async (item) => {
+      const product = await Product.findById(item.product);
+      product.userOrderedItem.push({ userDetails: req.user._id });
+      await product.save();
+    });
+    const user = await User.findById(req.user._id);
+    user.productsOrdered.push(...orderItems);
+    await user.save();
+    const paymentInfo = {
+      status:'created',
+      id:razorpay_payment_id
+    }
+    await Order.create({
+      shippingInfo,
+      orderItems,
+      paymentIn,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+      paymentMethod,
+      paymentDate: Date.now(),
+      userOrdered: req.user._id,
+      paymentIn:paymentInfo
+    });
 
     res.redirect(
       `http://localhost:3000/payment/success?reference=${razorpay_payment_id}`

@@ -14,7 +14,7 @@ const cors = require('cors')
 app.use(
     cors({
         credentials: true,
-      origin: "http://213.210.37.127:3000",
+      origin: "http://213.210.37.127",
     })
 );
 app.use(cookieParser());
