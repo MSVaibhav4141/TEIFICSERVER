@@ -14,7 +14,7 @@ const cors = require('cors')
 app.use(
     cors({
         credentials: true,
-      origin: "http://213.210.37.127",
+      origin: "http://www.teific.in/",
     })
 );
 app.use(cookieParser());
