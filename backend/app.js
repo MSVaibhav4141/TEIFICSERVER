@@ -15,7 +15,7 @@ console.log(allowedOrigin)
 app.use(
     cors({
       credentials: true,
-      origin: '*',
+      origin: "https://teificclient.onrender.com/"
     })
   );
   
