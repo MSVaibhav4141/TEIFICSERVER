@@ -14,9 +14,12 @@ const cors = require('cors')
 app.use(
     cors({
         credentials: true,
-      origin: process.env.FRONTEND_URL,
+      origin: [process.env.ALLOWEDORIGIN1,process.env.ALLOWEDORIGIN2],
+	methods: 'GET,POST,PUT,DELETE'
     })
 );
+
+console.log([process.env.ALLOWEDORIGIN1, process.env.ALLOWEDORIGIN2])
 app.use(cookieParser());
 
 // Apply middleware to set Access-Control-Allow-Credentials header

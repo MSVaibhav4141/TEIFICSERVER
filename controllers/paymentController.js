@@ -79,7 +79,7 @@ exports.paymentVerification = asyncErrorHandler(async (req, res, next) => {
     });
 
     res.redirect(
-      `http://localhost:3000/payment/success?reference=${razorpay_payment_id}`
+      `http://teific.in/payment/success?reference=${razorpay_payment_id}`
     );
   } else {
     res.status(400).json({
