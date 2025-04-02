@@ -10,23 +10,21 @@ const fileUpload = require("express-fileupload");
 const errorCatcher = require("./utils/errorCatcher");
 const cookieParser = require("cookie-parser");
 const cors = require('cors')
-
+const allowedOrigin = [process.env.ALLOWEDORIGIN1,process.env.ALLOWEDORIGIN2];
+console.log(allowedOrigin)
 app.use(
     cors({
-        credentials: true,
-      origin: [process.env.ALLOWEDORIGIN1,process.env.ALLOWEDORIGIN2],
-	methods: 'GET,POST,PUT,DELETE'
+      credentials: true,
+      origin: allowedOrigin,
     })
-);
-
-console.log([process.env.ALLOWEDORIGIN1, process.env.ALLOWEDORIGIN2])
+  );
+  
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+  });
 app.use(cookieParser());
 
-// Apply middleware to set Access-Control-Allow-Credentials header
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Credentials', 'true');
-    next();
-});
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
@@ -38,3 +36,4 @@ app.use("/VC1", paymentRoute);
 app.use(errorCatcher);
 
 module.exports = app;
+   
